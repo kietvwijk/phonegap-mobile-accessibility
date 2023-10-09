@@ -70,9 +70,6 @@ public class MobileAccessibility extends CordovaPlugin {
             if (action.equals("isScreenReaderRunning")) {
                 isScreenReaderRunning(callbackContext);
                 return true;
-            } else if (action.equals("isClosedCaptioningEnabled")) {
-                isClosedCaptioningEnabled(callbackContext);
-                return true;
             } else if (action.equals("isTouchExplorationEnabled")) {
                 isTouchExplorationEnabled(callbackContext);
                 return true;
@@ -180,20 +177,6 @@ public class MobileAccessibility extends CordovaPlugin {
         return mIsScreenReaderRunning;
     }
 
-    private void isClosedCaptioningEnabled(final CallbackContext callbackContext) {
-        mClosedCaptioningEnabled = mMobileAccessibilityHelper.isClosedCaptioningEnabled();
-        cordova.getThreadPool().execute(new Runnable() {
-            public void run() {
-                callbackContext.success(mClosedCaptioningEnabled ? 1 : 0);
-            }
-        });
-    }
-
-    protected boolean isClosedCaptioningEnabled() {
-        mClosedCaptioningEnabled = mMobileAccessibilityHelper.isClosedCaptioningEnabled();
-        return mClosedCaptioningEnabled;
-    }
-
     private void isTouchExplorationEnabled(final CallbackContext callbackContext) {
         mTouchExplorationEnabled= mMobileAccessibilityHelper.isTouchExplorationEnabled();
         cordova.getThreadPool().execute(new Runnable() {
@@ -226,24 +209,6 @@ public class MobileAccessibility extends CordovaPlugin {
         mIsScreenReaderRunning = enabled;
         cordova.getActivity().runOnUiThread(new Runnable() {
             public void run() {
-                    sendMobileAccessibilityStatusChangedCallback();
-                }
-            });
-    }
-
-    public void onCaptioningEnabledChanged(boolean enabled) {
-        mClosedCaptioningEnabled = enabled;
-        cordova.getActivity().runOnUiThread(new Runnable() {
-             public void run() {
-                    sendMobileAccessibilityStatusChangedCallback();
-                }
-            });
-    }
-
-    public void onTouchExplorationStateChanged(boolean enabled) {
-        mTouchExplorationEnabled = enabled;
-        cordova.getActivity().runOnUiThread(new Runnable() {
-             public void run() {
                     sendMobileAccessibilityStatusChangedCallback();
                 }
             });
@@ -301,10 +266,8 @@ public class MobileAccessibility extends CordovaPlugin {
         JSONObject status = new JSONObject();
         try {
             status.put("isScreenReaderRunning", mIsScreenReaderRunning);
-            status.put("isClosedCaptioningEnabled", mClosedCaptioningEnabled);
             status.put("isTouchExplorationEnabled", mTouchExplorationEnabled);
             //Log.i("MobileAccessibility",  "MobileAccessibility.isScreenReaderRunning == " + status.getString("isScreenReaderRunning") +
-            //        "\nMobileAccessibility.isClosedCaptioningEnabled == " + status.getString("isClosedCaptioningEnabled") +
             //        "\nMobileAccessibility.isTouchExplorationEnabled == " + status.getString("isTouchExplorationEnabled") );
         } catch (JSONException e) {
             e.printStackTrace();

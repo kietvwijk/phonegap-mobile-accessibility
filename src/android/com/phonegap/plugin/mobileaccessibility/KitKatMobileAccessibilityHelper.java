@@ -47,11 +47,6 @@ public class KitKatMobileAccessibilityHelper extends
     }
 
     @Override
-    public boolean isClosedCaptioningEnabled() {
-        return mCaptioningManager.isEnabled();
-    }
-
-    @Override
     public boolean isTouchExplorationEnabled() {
         return mAccessibilityManager.isTouchExplorationEnabled();
     }
@@ -59,20 +54,6 @@ public class KitKatMobileAccessibilityHelper extends
     @Override
     public void addStateChangeListeners() {
         super.addStateChangeListeners();
-        if (mCaptioningChangeListener == null) {
-            mCaptioningChangeListener = new CaptioningChangeListener() {
-                @Override
-                public void onEnabledChanged(boolean enabled) {
-                    onCaptioningEnabledChanged(enabled);
-                }
-            };
-        }
-        mCaptioningManager.addCaptioningChangeListener(mCaptioningChangeListener);
-
-        if (mTouchExplorationStateChangeListener == null) {
-            mTouchExplorationStateChangeListener = new InternalTouchExplorationStateChangeListener();
-        }
-        mAccessibilityManager.addTouchExplorationStateChangeListener(mTouchExplorationStateChangeListener);
     }
 
     @Override
@@ -81,19 +62,6 @@ public class KitKatMobileAccessibilityHelper extends
         if (mCaptioningChangeListener != null) {
             mCaptioningManager.removeCaptioningChangeListener(mCaptioningChangeListener);
             mCaptioningChangeListener = null;
-        }
-        if (mTouchExplorationStateChangeListener != null) {
-            mAccessibilityManager.removeTouchExplorationStateChangeListener(mTouchExplorationStateChangeListener);
-            mTouchExplorationStateChangeListener = null;
-        }
-    }
-
-    private class InternalTouchExplorationStateChangeListener
-        implements TouchExplorationStateChangeListener {
-
-        @Override
-        public void onTouchExplorationStateChanged(boolean enabled) {
-            mMobileAccessibility.onTouchExplorationStateChanged(enabled);
         }
     }
 }

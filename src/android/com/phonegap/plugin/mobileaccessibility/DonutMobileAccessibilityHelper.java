@@ -64,11 +64,6 @@ public class DonutMobileAccessibilityHelper extends
     }
 
     @Override
-    public boolean isClosedCaptioningEnabled() {
-        return false;
-    }
-
-    @Override
     public boolean isScreenReaderRunning() {
         return mAccessibilityManager.isEnabled();
     }
@@ -81,16 +76,6 @@ public class DonutMobileAccessibilityHelper extends
     @Override
     public void onAccessibilityStateChanged(boolean enabled) {
         mMobileAccessibility.onAccessibilityStateChanged(enabled);
-    }
-
-    @Override
-    public void onCaptioningEnabledChanged(boolean enabled) {
-        mMobileAccessibility.onCaptioningEnabledChanged(enabled);
-    }
-
-    @Override
-    public void onTouchExplorationStateChanged(boolean enabled) {
-        mMobileAccessibility.onTouchExplorationStateChanged(enabled);
     }
 
     @Override
