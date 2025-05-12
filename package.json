@@ -2,7 +2,7 @@
   "name": "@kietvwijk/phonegap-plugin-mobile-accessibility",
   "private": false,
   "description": "PhoneGap Mobile Accessibility Plugin",
-  "version": "1.0.5",
+  "version": "1.0.5-kiet1",
   "homepage": "http://github.com/kietvwijk/phonegap-mobile-accessibility#readme",
   "repository": {
     "type": "git",
